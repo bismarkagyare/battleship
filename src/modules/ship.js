@@ -1,16 +1,15 @@
 class Ship {
   constructor(length) {
     this.length = length;
-    this.hits = 0;
-    this.sunkStatus = false;
+    this.hits = new Array(length).fill(false);
   }
 
-  hit() {
-    ++this.hits;
+  hit(index) {
+    this.hits[index] = true;
   }
 
   isSunk() {
-    return this.length === this.hits;
+    return this.hits.every((cell) => cell === true);
   }
 }
 
