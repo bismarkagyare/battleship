@@ -21,7 +21,7 @@ describe('Ship', () => {
     expect(ship.hits[1]).toBe(true);
   });
 
-  test('isSunk() should return false if not all ships are hit', () => {
+  test('isSunk() should return false if not all cells are hit', () => {
     ship.hit(0);
     ship.hit(2);
     expect(ship.isSunk()).toBe(false);
