@@ -47,6 +47,20 @@ class Gameboard {
       console.log('invalid coordinates or orientation');
     }
   }
+
+  receiveAttacks(attackCoordinates, coordinates) {
+    const { column, row } = coordinates;
+    if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
+      const hitsShips = this.ships.find((ship) => {
+        if (ship.coordinates === attackCoordinates) {
+          ship.hit(attackCoordinates);
+        } else {
+          this.missedAttacks.push(attackCoordinates);
+        }
+      });
+      return hitsShips;
+    }
+  }
 }
 
 export default Gameboard;
