@@ -48,17 +48,25 @@ class Gameboard {
     }
   }
 
-  receiveAttacks(attackCoordinates, coordinates) {
-    const { column, row } = coordinates;
+  receiveAttacks(attackCoordinates) {
+    const { column, row } = attackCoordinates;
     if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
-      const hitsShips = this.ships.find((ship) => {
-        if (ship.coordinates === attackCoordinates) {
-          ship.hit(attackCoordinates);
-        } else {
-          this.missedAttacks.push(attackCoordinates);
+      let isHit = false;
+
+      this.ships.forEach((ship) => {
+        if (ship.coordinates.row === row && ship.coordinates.column === column) {
+          ship.hit();
+          isHit = true;
         }
       });
-      return hitsShips;
+      if (isHit === false) {
+        this.missedAttacks.push(attackCoordinates);
+      }
+
+      return isHit;
+    } else {
+      console.log('invalid attack coordinates');
+      return false;
     }
   }
 }
