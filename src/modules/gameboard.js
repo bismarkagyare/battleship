@@ -69,6 +69,10 @@ class Gameboard {
       return false;
     }
   }
+
+  areAllShipsSunk() {
+    return this.ships.every((ship) => ship.isSunk());
+  }
 }
 
 export default Gameboard;
