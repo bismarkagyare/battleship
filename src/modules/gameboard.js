@@ -20,20 +20,19 @@ class Gameboard {
       // check for overlap with existing ships
 
       const overlappingShip = this.ships.find((ship) => {
-        if (orientation === 'horizontal') {
+        const checkOverlap = (rowOffset, columnOffset) => {
           for (let i = 0; i < length; i++) {
-            if (ship.coordinates.row === row && ship.coordinates.column + i === column) {
+            const shipRow = ship.coordinates.row + rowOffset * i;
+            const shipColumn = ship.coordinates.column + columnOffset * i;
+            if (shipRow === row && shipColumn === column) {
               return true;
-            } else if (orientation === 'vertical') {
-              for (let i = 0; i < length; i++) {
-                if (ship.coordinates.row + i === row && ship.coordinates.column === column) {
-                  return true;
-                }
-              }
             }
           }
           return false;
-        }
+        };
+        return (
+          (orientation === 'horizontal' && checkOverlap(0, 1)) || (orientation === 'vertical' && checkOverlap(1, 0))
+        );
       });
 
       if (!overlappingShip) {
@@ -53,12 +52,13 @@ class Gameboard {
     if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
       let isHit = false;
 
-      this.ships.forEach((ship) => {
+      for (const ship of this.ships) {
         if (ship.coordinates.row === row && ship.coordinates.column === column) {
           ship.hit();
           isHit = true;
+          break; // Exit the loop after finding a hit
         }
-      });
+      }
       if (isHit === false) {
         this.missedAttacks.push(attackCoordinates);
       }
