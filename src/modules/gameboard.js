@@ -6,10 +6,20 @@ class Gameboard {
     this.missedAttacks = [];
   }
 
-  placeShip(coordinate) {
-    if (coordinate >= 0 && coordinate < this.size && coordinate >= 0 && coordinate < this.size) {
-      const newShip = new Ship(coordinate.length);
-      this.ships.push(newShip);
+  placeShip(length, coordinates, orientation) {
+    const { column, row } = coordinates;
+
+    if (
+      row >= 0 &&
+      row < this.size &&
+      column >= 0 &&
+      column < this.size &&
+      (orientation === 'vertical' || orientation === 'horizontal')
+    ) {
+      const newShip = new Ship(length);
+      // check for overlap with existing ships
+
+      const overlappingShip = this.ships.find((ship) => {});
     }
   }
 }
