@@ -73,6 +73,19 @@ class Gameboard {
   areAllShipsSunk() {
     return this.ships.every((ship) => ship.isSunk());
   }
+
+  isValidMove(coordinates) {
+    const { column, row } = coordinates;
+    if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
+      const isAlreadyAttacked = this.missedAttacks.some((attack) => {
+        return attack.row === row && attack.column === column;
+      });
+      if (!isAlreadyAttacked) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 export default Gameboard;
