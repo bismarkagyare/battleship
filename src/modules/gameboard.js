@@ -54,7 +54,8 @@ class Gameboard {
 
       for (const ship of this.ships) {
         if (ship.coordinates.row === row && ship.coordinates.column === column) {
-          ship.hit();
+          const cellIndex = ship.getIndexOfCell(row, column);
+          ship.hit(cellIndex);
           isHit = true;
           break; // Exit the loop after finding a hit
         }
