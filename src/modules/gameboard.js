@@ -4,6 +4,7 @@ class Gameboard {
     this.size = size;
     this.ships = [];
     this.missedAttacks = [];
+    this.availableAttacks = [];
   }
 
   placeShip(length, coordinates, orientation) {
@@ -76,7 +77,6 @@ class Gameboard {
   }
 
   getAvailableAttacks() {
-    const availableAttacks = [];
     for (let column = 0; column < this.size; column++) {
       for (let row = 0; row < this.size; row++) {
         const isAlreadyAttacked = this.missedAttacks.some((attack) => {
