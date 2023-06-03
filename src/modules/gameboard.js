@@ -75,6 +75,21 @@ class Gameboard {
     return this.ships.every((ship) => ship.isSunk());
   }
 
+  getAvilableAttacks() {
+    const availableAttacks = [];
+    for (let column = 0; column < this.size; column++) {
+      for (let row = 0; row < this.size; row++) {
+        const isAlreadyAttacked = this.missedAttacks.some((attack) => {
+          return attack.column === column && attack.row === row;
+        });
+        if (!isAlreadyAttacked) {
+          availableAttacks.push({ column, row });
+        }
+      }
+    }
+    return availableAttacks;
+  }
+
   isValidMove(coordinates) {
     const { column, row } = coordinates;
     if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
