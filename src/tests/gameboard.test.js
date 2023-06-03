@@ -31,4 +31,28 @@ describe('Gameboard', () => {
     gameboard.receiveAttacks({ column: 5, row: 7 });
     expect(gameboard.missedAttacks.length).toBe(1);
   });
+
+  test('checking if all ships are sunk should return true when all ships are sunk', () => {
+    const ship1 = new Ship(2);
+    const ship2 = new Ship(3);
+
+    ship1.hits = [true, true];
+    ship2.hits = [true, true, true];
+
+    gameboard.ships.push(ship1, ship2);
+
+    expect(gameboard.areAllShipsSunk()).toBe(true);
+  });
+
+  test('checking if all ships are sunk should return false when at least one ship is not sunk', () => {
+    const ship1 = new Ship(3);
+    const ship2 = new Ship(4);
+
+    ship1.hits = [true, false, true];
+    ship2.hits = [true, true, true, false];
+
+    gameboard.ships.push(ship1, ship2);
+
+    expect(gameboard.areAllShipsSunk()).toBe(false);
+  });
 });
