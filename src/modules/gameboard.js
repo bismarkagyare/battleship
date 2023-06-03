@@ -75,7 +75,7 @@ class Gameboard {
     return this.ships.every((ship) => ship.isSunk());
   }
 
-  getAvilableAttacks() {
+  getAvailableAttacks() {
     const availableAttacks = [];
     for (let column = 0; column < this.size; column++) {
       for (let row = 0; row < this.size; row++) {
