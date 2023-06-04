@@ -55,4 +55,20 @@ describe('Gameboard', () => {
 
     expect(gameboard.areAllShipsSunk()).toBe(false);
   });
+
+  test('getting available attacks should return all valid coordinates', () => {
+    gameboard.placeShip(2, { column: 1, row: 1 }, 'horizontal');
+    gameboard.receiveAttacks({ column: 3, row: 2 });
+    gameboard.receiveAttacks({ column: 4, row: 3 });
+
+    const availableAttacks = gameboard.getAvailableAttacks();
+    expect(availableAttacks).toEqual(
+      expect.arrayContaining([
+        { column: 0, row: 0 },
+        { column: 1, row: 0 },
+        { column: 2, row: 0 },
+        // ... other valid coordinates
+      ])
+    );
+  });
 });
