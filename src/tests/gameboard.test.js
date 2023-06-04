@@ -71,4 +71,23 @@ describe('Gameboard', () => {
       ])
     );
   });
+
+  test('checking if a move is valid should return if the coordinates are valid', () => {
+    gameboard.placeShip(3, { column: 1, row: 1 }, 'horizontal');
+    gameboard.receiveAttacks({ column: 2, row: 1 });
+
+    const isValidMove = gameboard.isValidMove({ column: 3, row: 1 });
+    expect(isValidMove).toBe(true);
+  });
+
+  test('checking if a move is valid should return false if the coordinates are invalid or already attacked', () => {
+    gameboard.placeShip(3, { column: 1, row: 1 }, 'horizontal');
+    gameboard.receiveAttacks({ column: 2, row: 1 });
+
+    const isValidMove1 = gameboard.isValidMove({ column: -1, row: 5 });
+    const isValidMove2 = gameboard.isValidMove({ column: 2, row: 1 });
+
+    expect(isValidMove1).toBe(false);
+    expect(isValidMove2).toBe(false);
+  });
 });
