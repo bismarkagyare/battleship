@@ -12,25 +12,17 @@ class Ship {
     return this.hits.every((cell) => cell === true);
   }
 
-  // getIndexOfCell(row, column) {
-  //   const { length } = this;
-  //   const startColumn = this.coordinates.column;
-  //   const startRow = this.coordinates.row;
+  getIndexOfCell(column, row) {
+    const columnIndex = column - this.coordinates.column;
+    const rowIndex = row - this.coordinates.row;
 
-  //   if (this.orientation === 'horizontal') {
-  //     return column - startColumn;
-  //   } else if (this.orientation === 'vertical') {
-  //     return row - startRow;
-  //   }
-  //   return -1;
-  // }
+    if (this.orientation === 'horizontal' && rowIndex === 0) {
+      return columnIndex >= 0 && columnIndex < this.length ? columnIndex : -1;
+    } else if (this.orientation === 'vertical' && columnIndex === 0) {
+      return rowIndex >= 0 && rowIndex < this.length ? rowIndex : -1;
+    }
 
-  getIndexOfCell(row, column) {
-    const startColumn = this.coordinates.column;
-    const startRow = this.coordinates.row;
-    const index = this.orientation === 'horizontal' ? column - startColumn : row - startRow;
-
-    return index >= 0 && index < this.length ? index : -1;
+    return -1;
   }
 }
 
