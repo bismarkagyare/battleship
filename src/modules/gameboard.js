@@ -83,11 +83,11 @@ class Gameboard {
           return attack.column === column && attack.row === row;
         });
         if (!isAlreadyAttacked) {
-          availableAttacks.push({ column, row });
+          this.availableAttacks.push({ column, row });
         }
       }
     }
-    return availableAttacks;
+    return this.availableAttacks;
   }
 
   isValidMove(coordinates) {
