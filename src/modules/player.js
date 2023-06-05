@@ -28,7 +28,10 @@ class Player {
     return attackCoordinates;
   }
 
-  switchTurns() {}
+  switchTurns() {
+    this.isPlayerTurn = !this.isPlayerTurn;
+    this.isComputerTurn = !this.isComputerTurn;
+  }
 }
 
 export default Player;
