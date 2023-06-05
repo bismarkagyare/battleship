@@ -6,8 +6,9 @@ describe('Player', () => {
   let gameboard;
 
   beforeEach(() => {
-    player = new Player('Bismark');
     gameboard = new Gameboard(10);
+    player = new Player('Bismark');
+    player.gameboard = gameboard;
   });
 
   test('should have a name', () => {
@@ -40,5 +41,15 @@ describe('Player', () => {
     expect(attackCoordinates.column).toBeLessThanOrEqual(gameboard.size);
     expect(attackCoordinates.row).toBeGreaterThanOrEqual(0);
     expect(attackCoordinates.row).toBeLessThanOrEqual(gameboard.size);
+  });
+
+  //use mocking in jest to test makeAttack() method
+
+  test('should attack computer grid with player attack coordinates', () => {
+    // Mock the getPlayerAttackCoordinates() method to return specific coordinates
+    player.getPlayerAttackCoordinates = jest.fn().mockReturnValue({ column: 3, row: 4 });
+    gameboard.receiveAttacks = jest.fn();
+    player.makeAttack(gameboard);
+    expect(gameboard.receiveAttacks).toHaveBeenCalledWith({ column: 3, row: 4 });
   });
 });
