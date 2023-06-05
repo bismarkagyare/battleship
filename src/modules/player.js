@@ -5,13 +5,25 @@ class Player {
     this.name = name;
     this.gameboard = new Gameboard(10);
     this.isPlayerTurn = false;
+    this.isComputerTurn = false;
   }
 
   makeAttack(gameboard) {
     if (this.isPlayerTurn) {
       const attackCoordinates = this.getPlayerAttackCoordinates();
+      gameboard.receiveAttacks(attackCoordinates);
+    } else if (this.isComputerTurn) {
+      const attackCoordinates = this.getComputerAttackCoordinates;
+      gameboard.receiveAttacks(attackCoordinates);
     }
+    this.switchTurns();
   }
+
+  getPlayerAttackCoordinates() {}
+
+  getComputerAttackCoordinates() {}
+
+  switchTurns() {}
 }
 
 export default Player;
