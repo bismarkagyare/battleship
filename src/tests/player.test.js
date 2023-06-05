@@ -17,4 +17,19 @@ describe('Player', () => {
   test('should have a gameboard', () => {
     expect(player.gameboard).toBeInstanceOf(Gameboard);
   });
+
+  test('should start with turn flags set to true and false', () => {
+    expect(player.isPlayerTurn).toBe(true);
+    expect(player.isComputerTurn).toBe(false);
+  });
+
+  test('should switch turns correctly', () => {
+    player.switchTurns();
+    expect(player.isPlayerTurn).toBe(false);
+    expect(player.isComputerTurn).toBe(true);
+
+    player.switchTurns();
+    expect(player.isPlayerTurn).toBe(true);
+    expect(player.isComputerTurn).toBe(false);
+  });
 });
