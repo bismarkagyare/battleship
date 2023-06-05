@@ -21,7 +21,12 @@ class Player {
 
   getPlayerAttackCoordinates() {}
 
-  getComputerAttackCoordinates() {}
+  getComputerAttackCoordinates() {
+    const randomColumn = Math.floor(Math.random() * this.gameboard.size);
+    const randomRow = Math.floor(Math.random() * this.gameboard.size);
+    const attackCoordinates = { column: randomColumn, row: randomRow };
+    return attackCoordinates;
+  }
 
   switchTurns() {}
 }
