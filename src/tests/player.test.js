@@ -13,4 +13,8 @@ describe('Player', () => {
   test('should have a name', () => {
     expect(player.name).toBe('Bismark');
   });
+
+  test('should have a gameboard', () => {
+    expect(player.gameboard).toBeInstanceOf(Gameboard);
+  });
 });
