@@ -32,4 +32,13 @@ describe('Player', () => {
     expect(player.isPlayerTurn).toBe(true);
     expect(player.isComputerTurn).toBe(false);
   });
+
+  test('should generate valid coordinates for the computer', () => {
+    const attackCoordinates = player.getComputerAttackCoordinates();
+    expect(attackCoordinates).toBeDefined();
+    expect(attackCoordinates.column).toBeGreaterThanOrEqual(0);
+    expect(attackCoordinates.column).toBeLessThanOrEqual(gameboard.size);
+    expect(attackCoordinates.row).toBeGreaterThanOrEqual(0);
+    expect(attackCoordinates.row).toBeLessThanOrEqual(gameboard.size);
+  });
 });
