@@ -4,7 +4,7 @@ class Player {
   constructor(name) {
     this.name = name;
     this.gameboard = new Gameboard(10);
-    this.isPlayerTurn = false;
+    this.isPlayerTurn = true;
     this.isComputerTurn = false;
   }
 
