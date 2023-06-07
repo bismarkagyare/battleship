@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -9,6 +10,8 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
+    hot: false,
+    liveReload: true,
   },
   output: {
     filename: 'main.js',
@@ -34,8 +37,13 @@ module.exports = {
       filename: 'main.css',
     }),
     new HtmlWebpackPlugin({
+      title: 'Battleship',
       template: './src/template.html',
+      favicon: './src/assets/favicon/favicon.ico',
       filename: './index.html',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'src/assets', to: 'assets' }],
     }),
   ],
   optimization: {
