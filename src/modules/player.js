@@ -8,17 +8,6 @@ class Player {
     this.isComputerTurn = false;
   }
 
-  // makeAttack(gameboard) {
-  //   if (this.isPlayerTurn) {
-  //     const attackCoordinates = this.getPlayerAttackCoordinates();
-  //     this.gameboard.receiveAttacks(attackCoordinates);
-  //   } else if (this.isComputerTurn) {
-  //     const attackCoordinates = this.getComputerAttackCoordinates;
-  //     this.gameboard.receiveAttacks(attackCoordinates);
-  //   }
-  //   this.switchTurns();
-  // }
-
   makeAttack() {
     const attackCoordinates = this.isPlayerTurn
       ? this.getPlayerAttackCoordinates()
