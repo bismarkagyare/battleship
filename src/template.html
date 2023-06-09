@@ -16,6 +16,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
@@ -25,8 +26,21 @@
       </header>
 
       <main class="main">
-        <div class="board player-board"></div>
-        <div class="board computer-board"></div>
+        <div class="btns">
+          <button class="play-icon">
+            Play
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="button-icon">
+            Randomise
+            <i class="fas fa-random"></i>
+          </button>
+        </div>
+
+        <div class="boards">
+          <div class="board player-board"></div>
+          <div class="board computer-board"></div>
+        </div>
       </main>
 
       <footer class="footer">
