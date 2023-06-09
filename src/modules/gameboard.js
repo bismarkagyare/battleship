@@ -92,6 +92,7 @@ class Gameboard {
 
   isValidMove(coordinates) {
     const { column, row } = coordinates;
+
     if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
       const isAlreadyAttacked = this.missedAttacks.some((attack) => {
         return attack.row === row && attack.column === column;
@@ -100,6 +101,7 @@ class Gameboard {
         return true;
       }
     }
+
     return false;
   }
 }
