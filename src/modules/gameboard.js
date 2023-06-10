@@ -72,7 +72,7 @@ class Gameboard {
     }
   }
 
-  isValidPosition(length, orientation, coordinates) {
+  isValidPosition(length, coordinates, orientation) {
     const { column, row } = coordinates;
 
     if (
@@ -87,8 +87,28 @@ class Gameboard {
       for (let i = 0; i < length; i++) {
         const shipRow = orientation === 'vertical' ? row + i : row;
         const shipColumn = orientation === 'horizontal' ? column + i : column;
+
+        const isOccupied = this.ships.some((ship) => {
+          const { column: shipColumn, row: shipRow } = ship.coordinates;
+          return shipColumn === column && shipRow === row;
+        });
+
+        if (isOccupied) {
+          return false;
+        }
+
+        occupiedCells.push({ column: shipColumn, row: shipRow });
       }
+
+      // const isWithinBounds = occupiedCells.every((cell) => {
+      //   const { column: cellColumn, row: cellRow } = cell;
+      //   return cellColumn >= 0 && cellColumn < this.size && cellRow >= 0 && cellRow < this.size;
+      // });
+
+      // return isWithinBounds;
     }
+
+    return false;
   }
 
   areAllShipsSunk() {
