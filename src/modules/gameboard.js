@@ -72,6 +72,25 @@ class Gameboard {
     }
   }
 
+  isValidPosition(length, orientation, coordinates) {
+    const { column, row } = coordinates;
+
+    if (
+      row >= 0 &&
+      row < this.size &&
+      column >= 0 &&
+      column < this.size &&
+      (orientation === 'vertical' || orientation === 'horizontal')
+    ) {
+      const occupiedCells = [];
+
+      for (let i = 0; i < length; i++) {
+        const shipRow = orientation === 'vertical' ? row + i : row;
+        const shipColumn = orientation === 'horizontal' ? column + i : column;
+      }
+    }
+  }
+
   areAllShipsSunk() {
     return this.ships.every((ship) => ship.isSunk());
   }
