@@ -100,12 +100,12 @@ class Gameboard {
         occupiedCells.push({ column: shipColumn, row: shipRow });
       }
 
-      // const isWithinBounds = occupiedCells.every((cell) => {
-      //   const { column: cellColumn, row: cellRow } = cell;
-      //   return cellColumn >= 0 && cellColumn < this.size && cellRow >= 0 && cellRow < this.size;
-      // });
+      const isWithinBounds = occupiedCells.every((cell) => {
+        const { column: cellColumn, row: cellRow } = cell;
+        return cellColumn >= 0 && cellColumn < this.size && cellRow >= 0 && cellRow < this.size;
+      });
 
-      // return isWithinBounds;
+      return isWithinBounds;
     }
 
     return false;
