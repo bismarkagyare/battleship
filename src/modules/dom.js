@@ -14,4 +14,15 @@ const renderGameboard = (container, gameboard) => {
   }
 };
 
-export default renderGameboard;
+const initialiseGameboard = () => {
+  const playerBoardContainer = document.querySelector('.player-board');
+  const computerBoardContainer = document.querySelector('.computer-board');
+
+  const playerGameboard = new Gameboard(10);
+  const computerGameboard = new Gameboard(10);
+
+  renderGameboard(playerBoardContainer, playerGameboard);
+  renderGameboard(computerBoardContainer, computerGameboard);
+};
+
+export { renderGameboard, initialiseGameboard };
