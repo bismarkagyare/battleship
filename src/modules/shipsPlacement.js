@@ -14,4 +14,13 @@ const placeShipRandomly = (gameboard) => {
   });
 };
 
+const getRandomCoordinates = (size, length, orientation) => {
+  const maxRow = size - (orientation === 'horizontal' ? 1 : length);
+  const maxCol = size - (orientation === 'vertical' ? 1 : length);
+  const row = Math.floor(Math.random() * maxRow);
+  const col = Math.floor(Math.random() * maxCol);
+
+  return { col, row };
+};
+
 export default placeShipRandomly;
