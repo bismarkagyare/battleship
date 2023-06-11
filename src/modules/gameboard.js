@@ -1,147 +1,72 @@
-import Ship from './ship';
 class Gameboard {
   constructor(size) {
     this.size = size;
-    this.ships = [];
-    this.missedAttacks = [];
-    this.availableAttacks = [];
+    this.grid = this.createGrid();
   }
 
-  placeShip(length, coordinates, orientation) {
-    const { column, row } = coordinates;
+  createGrid() {
+    const grid = [];
 
-    if (
-      row >= 0 &&
-      row < this.size &&
-      column >= 0 &&
-      column < this.size &&
-      (orientation === 'vertical' || orientation === 'horizontal')
-    ) {
-      const newShip = new Ship(length);
-      // check for overlap with existing ships
-
-      const overlappingShip = this.ships.find((ship) => {
-        const checkOverlap = (rowOffset, columnOffset) => {
-          for (let i = 0; i < length; i++) {
-            const shipRow = ship.coordinates.row + rowOffset * i;
-            const shipColumn = ship.coordinates.column + columnOffset * i;
-            if (shipRow === row && shipColumn === column) {
-              return true;
-            }
-          }
-          return false;
-        };
-        return (
-          (orientation === 'horizontal' && checkOverlap(0, 1)) || (orientation === 'vertical' && checkOverlap(1, 0))
-        );
-      });
-
-      if (!overlappingShip) {
-        newShip.coordinates = { column, row };
-        newShip.orientation = orientation;
-        this.ships.push(newShip);
-      } else {
-        console.log('there was an overlap');
+    for (let row = 0; row < this.size; row++) {
+      const rowCells = [];
+      for (let col = 0; col < this.size; col++) {
+        rowCells.push({ ship: null, isAttacked: false });
       }
-    } else {
-      console.log('invalid coordinates or orientation');
+      grid.push(rowCells);
     }
+
+    return grid;
   }
 
-  receiveAttacks(attackCoordinates) {
-    const { column, row } = attackCoordinates;
-    if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
-      let isHit = false;
+  placeShip(ship, startRow, startCol, orientation) {
+    const endRow = orientation === 'vertical' ? startRow + ship.length - 1 : startRow;
+    const endCol = orientation === 'horizontal' ? startCol + ship.length - 1 : startCol;
 
-      for (const ship of this.ships) {
-        if (ship.coordinates.row === row && ship.coordinates.column === column) {
-          const cellIndex = ship.getIndexOfCell(row, column);
-          ship.hit(cellIndex);
-          isHit = true;
-          break; // Exit the loop after finding a hit
-        }
-      }
-      if (isHit === false) {
-        this.missedAttacks.push(attackCoordinates);
-      }
-
-      return isHit;
-    } else {
-      console.log('invalid attack coordinates');
+    if (!this.isValidPosition(startRow, startCol, endRow, endCol)) {
       return false;
     }
+
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
+        this.grid[row][col].ship = ship;
+        this.grid[row][col].orientation = orientation;
+      }
+    }
+
+    return true;
   }
 
-  isValidPosition(length, coordinates, orientation) {
-    const { column, row } = coordinates;
-
+  isValidPosition(startRow, startCol, endRow, endCol) {
     if (
-      row >= 0 &&
-      row < this.size &&
-      column >= 0 &&
-      column < this.size &&
-      (orientation === 'vertical' || orientation === 'horizontal')
+      startRow < 0 ||
+      startRow >= this.size ||
+      startCol < 0 ||
+      startCol >= this.size ||
+      endRow < 0 ||
+      endRow >= this.size ||
+      endCol < 0 ||
+      endCol >= this.size
     ) {
-      const occupiedCells = [];
+      return false;
+    }
 
-      for (let i = 0; i < length; i++) {
-        const shipRow = orientation === 'vertical' ? row + i : row;
-        const shipColumn = orientation === 'horizontal' ? column + i : column;
-
-        const isOccupied = this.ships.some((ship) => {
-          const { column: shipColumn, row: shipRow } = ship.coordinates;
-          return shipColumn === column && shipRow === row;
-        });
-
-        if (isOccupied) {
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
+        if (this.grid[row][col].ship !== null) {
           return false;
         }
-
-        occupiedCells.push({ column: shipColumn, row: shipRow });
-      }
-
-      const isWithinBounds = occupiedCells.every((cell) => {
-        const { column: cellColumn, row: cellRow } = cell;
-        return cellColumn >= 0 && cellColumn < this.size && cellRow >= 0 && cellRow < this.size;
-      });
-
-      return isWithinBounds;
-    }
-
-    return false;
-  }
-
-  areAllShipsSunk() {
-    return this.ships.every((ship) => ship.isSunk());
-  }
-
-  getAvailableAttacks() {
-    for (let column = 0; column < this.size; column++) {
-      for (let row = 0; row < this.size; row++) {
-        const isAlreadyAttacked = this.missedAttacks.some((attack) => {
-          return attack.column === column && attack.row === row;
-        });
-        if (!isAlreadyAttacked) {
-          this.availableAttacks.push({ column, row });
-        }
-      }
-    }
-    return this.availableAttacks;
-  }
-
-  isValidMove(coordinates) {
-    const { column, row } = coordinates;
-
-    if (row >= 0 && row < this.size && column >= 0 && column < this.size) {
-      const isAlreadyAttacked = this.missedAttacks.some((attack) => {
-        return attack.row === row && attack.column === column;
-      });
-      if (!isAlreadyAttacked) {
-        return true;
       }
     }
 
-    return false;
+    return true;
+  }
+
+  getShipAt(row, col) {
+    return this.grid[row][col].ship;
+  }
+
+  getOrientationAt(row, col) {
+    return this.grid[row][col].orientation;
   }
 }
 
