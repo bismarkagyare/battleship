@@ -28,15 +28,15 @@ body {
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.board-container {
+.game-container {
   display: flex;
   gap: 5rem;
   justify-content: center;
   align-items: center;
 }
 
-.player-board,
-.computer-board {
+#player-board,
+#computer-board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -44,10 +44,42 @@ body {
   height: 340px;
   border: 0.5px solid #b4b4ff;
   margin-top: 3rem;
+  border-collapse: separate;
 }
 
 .board-cell {
   border: 0.5px solid #b4b4ff;
+}
+
+.ship-cell {
+  background-color: #f3f4ff;
+  border: none;
+}
+
+.ship-cell.ship-cell-horizontal {
+  border-top: 2px solid blue;
+  border-bottom: 2px solid blue;
+}
+
+.ship-cell.ship-cell-start:first-child {
+  border-left: 2px solid blue;
+}
+
+.ship-cell.ship-cell-end:last-child {
+  border-right: 2px solid blue;
+}
+
+.ship-cell.ship-cell-vertical {
+  border-left: 2px solid blue;
+  border-right: 2px solid blue;
+}
+
+.ship-cell.ship-cell-start {
+  border-top: 2px solid blue;
+}
+
+.ship-cell.ship-cell-end {
+  border-bottom: 2px solid blue;
 }
 
 .footer {
