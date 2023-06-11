@@ -16,6 +16,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <title>Battleship</title>
   <link rel="icon" href="favicon.ico"><script defer src="main.js"></script><link href="main.css" rel="stylesheet"></head>
   <body>
@@ -25,14 +26,27 @@
       </header>
 
       <main class="main">
-        <div class="board player-board"></div>
-        <div class="board computer-board"></div>
+        <div class="btns">
+          <button class="play-btn btn">
+            Play
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="random-btn btn">
+            Randomise
+            <i class="fas fa-random"></i>
+          </button>
+        </div>
+
+        <div class="game-container">
+          <div class="board" id="player-board"></div>
+          <div class="board" id="computer-board"></div>
+        </div>
       </main>
 
       <footer class="footer">
         <p>&copy;Bismark Agyare</p>
         <a href="https://github.com/bismarkagyare" target="_blank">
-          <i class="fab fa-github"></i>
+          <i class="fab fa-github rotate"></i>
         </a>
       </footer>
     </div>
