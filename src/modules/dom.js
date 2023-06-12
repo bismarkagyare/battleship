@@ -1,18 +1,13 @@
 import Gameboard from './gameboard';
 import Ship from './ship';
+import placeShipsRandomly from './shipsPlacement';
 
 const initializeGame = () => {
   const playerGameboard = new Gameboard(10);
   const computerGameboard = new Gameboard(10);
 
   // Place player's ships
-  const playerShips = [
-    new Ship(5), // Carrier
-    new Ship(4), // Battleship
-    new Ship(3), // Cruiser
-    new Ship(3), // Submarine
-    new Ship(2), // Destroyer
-  ];
+  const playerShips = [new Ship(5), new Ship(4), new Ship(3), new Ship(3), new Ship(2)];
   placeShipsRandomly(playerGameboard, playerShips);
 
   // Place computer's ships
@@ -24,24 +19,28 @@ const initializeGame = () => {
   renderGameboard('computer-board', computerGameboard);
 };
 
-const placeShipsRandomly = (gameboard, ships) => {
-  for (const ship of ships) {
-    let startRow, startCol, orientation;
+const createCell = (row, col, gameboard) => {
+  const cell = document.createElement('div');
+  cell.classList.add('board-cell');
+  cell.dataset.row = row;
+  cell.dataset.column = col;
 
-    do {
-      startRow = getRandomCoordinate(gameboard.size);
-      startCol = getRandomCoordinate(gameboard.size);
-      orientation = getRandomOrientation();
-    } while (!gameboard.placeShip(ship, startRow, startCol, orientation));
+  const ship = gameboard.getShipAt(row, col);
+  if (ship !== null) {
+    cell.classList.add('ship-cell');
   }
-};
 
-const getRandomCoordinate = (size) => {
-  return Math.floor(Math.random() * size);
-};
+  const orientation = gameboard.getOrientationAt(row, col);
+  const isHorizontal = orientation === 'horizontal';
+  const isVertical = orientation === 'vertical';
 
-const getRandomOrientation = () => {
-  return Math.random() < 0.5 ? 'horizontal' : 'vertical';
+  if (isHorizontal) {
+    cell.classList.add('ship-cell-horizontal');
+  } else if (isVertical) {
+    cell.classList.add('ship-cell-vertical');
+  }
+
+  return cell;
 };
 
 const renderGameboard = (containerId, gameboard) => {
@@ -50,26 +49,7 @@ const renderGameboard = (containerId, gameboard) => {
 
   for (let row = 0; row < gameboard.size; row++) {
     for (let col = 0; col < gameboard.size; col++) {
-      const cell = document.createElement('div');
-      cell.classList.add('board-cell');
-      cell.dataset.row = row;
-      cell.dataset.column = col;
-
-      const ship = gameboard.getShipAt(row, col);
-      if (ship !== null) {
-        cell.classList.add('ship-cell');
-      }
-
-      const orientation = gameboard.getOrientationAt(row, col);
-      const isHorizontal = orientation === 'horizontal';
-      const isVertical = orientation === 'vertical';
-
-      if (isHorizontal) {
-        cell.classList.add('ship-cell-horizontal');
-      } else if (isVertical) {
-        cell.classList.add('ship-cell-vertical');
-      }
-
+      const cell = createCell(row, col, gameboard);
       container.appendChild(cell);
     }
   }
