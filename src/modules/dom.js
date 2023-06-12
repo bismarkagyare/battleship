@@ -17,6 +17,8 @@ const initializeGame = () => {
   // Render the gameboards
   renderGameboard('player-board', playerGameboard);
   renderGameboard('computer-board', computerGameboard);
+
+  randomizeShips(playerGameboard, playerShips, computerGameboard, computerShips);
 };
 
 const createCell = (row, col, gameboard) => {
@@ -53,6 +55,20 @@ const renderGameboard = (containerId, gameboard) => {
       container.appendChild(cell);
     }
   }
+};
+
+const randomizeShips = (playerGameboard, playerShips, computerGameboard, computerShips) => {
+  const randomizeShipsBtn = document.querySelector('.random-btn');
+  randomizeShipsBtn.addEventListener('click', () => {
+    playerGameboard.clearGrid();
+    computerGameboard.clearGrid();
+
+    placeShipsRandomly(playerGameboard, playerShips);
+    placeShipsRandomly(computerGameboard, computerShips);
+
+    renderGameboard('player-board', playerGameboard);
+    renderGameboard('computer-board', computerGameboard);
+  });
 };
 
 export default initializeGame;
