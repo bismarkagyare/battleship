@@ -2,6 +2,8 @@ class Ship {
   constructor(length) {
     this.length = length;
     this.hits = Array(length).fill(false);
+    this.row = null;
+    this.column = null;
   }
 
   hit(index) {
@@ -10,6 +12,15 @@ class Ship {
 
   isSunk() {
     return this.hits.every((hit) => hit);
+  }
+
+  getPosition() {
+    return { row: this.row, column: this.column };
+  }
+
+  setPosition(row, column) {
+    this.row = row;
+    this.column = column;
   }
 }
 
