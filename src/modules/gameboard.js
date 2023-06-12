@@ -18,6 +18,15 @@ class Gameboard {
     return grid;
   }
 
+  clearGrid() {
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        this.grid[row][col].ship = null;
+        this.grid[row][col].orientation = null;
+      }
+    }
+  }
+
   placeShip(ship, startRow, startCol, orientation) {
     const endRow = orientation === 'vertical' ? startRow + ship.length - 1 : startRow;
     const endCol = orientation === 'horizontal' ? startCol + ship.length - 1 : startCol;
