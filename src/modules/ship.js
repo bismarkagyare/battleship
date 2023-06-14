@@ -22,6 +22,11 @@ class Ship {
     this.row = row;
     this.column = column;
   }
+
+  resetPosition() {
+    this.row = null;
+    this.column = null;
+  }
 }
 
 export default Ship;
