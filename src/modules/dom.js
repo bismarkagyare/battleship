@@ -30,6 +30,10 @@ const createCell = (row, col, gameboard) => {
   const ship = gameboard.getShipAt(row, col);
   if (ship !== null) {
     cell.classList.add('ship-cell');
+    //cell.draggable = true;
+
+    //cell.addEventListener('dragstart', handleDragStart);
+    //cell.addEventListener('dragend', handleDragEnd);
   }
 
   const orientation = gameboard.getOrientationAt(row, col);
@@ -68,6 +72,30 @@ const randomizeShips = (playerGameboard, playerShips, computerGameboard, compute
 
     renderGameboard('player-board', playerGameboard);
     renderGameboard('computer-board', computerGameboard);
+  });
+};
+
+const handleDragStart = (event) => {
+  const shipCell = event.target;
+  const shipElement = shipCell.closest('.ship-cell');
+  const shipCells = Array.from(shipElement.parentNode.children);
+
+  event.dataTransfer.setData('text/plain', shipElement.dataset.row + '-' + shipElement.dataset.column);
+
+  // Highlight all ship cells during dragging
+  shipCells.forEach((cell) => {
+    cell.classList.add('dragging');
+  });
+};
+
+const handleDragEnd = (event) => {
+  const shipCell = event.target;
+  const shipElement = shipCell.closest('.ship-cell');
+  const shipCells = Array.from(shipElement.parentNode.children);
+
+  // Remove highlighting from ship cells after dragging
+  shipCells.forEach((cell) => {
+    cell.classList.remove('dragging');
   });
 };
 
