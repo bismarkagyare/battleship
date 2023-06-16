@@ -51,9 +51,17 @@ body {
   border: 0.5px solid #b4b4ff;
 }
 
+.ship {
+  border: 1px solid green;
+}
+
 .ship-cell {
   background-color: #f3f4ff;
   border: none;
+}
+
+.ship-cell.dragging {
+  opacity: 0.6;
 }
 
 .ship-cell.ship-cell-horizontal {
